@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-8#p2n6bz6ozxt-93q7m@l1+zs41bf)s9fbt=u_x+d1@xauis6@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["https://recipe-1-vhev.onrender.com/"]
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
