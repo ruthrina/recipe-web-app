@@ -10,7 +10,14 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
+from dotenv import load_dotenv
+
 from pathlib import Path
+
+import os
+
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -50,6 +57,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     # "debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
@@ -74,23 +82,39 @@ TEMPLATES = [
 WSGI_APPLICATION = "recipeproj.wsgi.application"
 
 # connect to mysql using MySQLClient
-import pymysql
+# import pymysql
 
-pymysql.install_as_MySQLdb()
+# pymysql.install_as_MySQLdb()
 
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "recipedb",
+#         "USER": "postgres",
+#         "PASSWORD": "ruthella",
+#         "HOST": "localhost",
+#         "PORT": "5432",
+#     }
+# }
+
+# Add these at the top of your settings.py
+
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "recipedb",
-        "USER": "postgres",
-        "PASSWORD": "ruthella",
-        "HOST": "localhost",
-        "PORT": "5432",
-    }
+  'default': {
+    'ENGINE': 'django.db.backends.postgresql',
+    'NAME': os.environ.get('PGDATABASE'),
+    'USER': os.environ.get('PGUSER'),
+    'PASSWORD': os.environ.get('PGPASSWORD'),
+    'HOST': os.environ.get('PGHOST'),
+    'PORT': os.environ.get('PGPORT', 5432),
+    'OPTIONS': {
+      'sslmode': 'require',
+    },
+  }
 }
 
 # LOGGING = {
